@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legacy Educação — Em Manutenção</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --coral:   #FF6565;
+      --orange:  #FFA94D;
+      --yellow:  #FFD43B;
+      --teal:    #38D9A9;
+      --sky:     #74C0FC;
+      --purple:  #CC5DE8;
+      --bg-top:  #FFF9EC;
+      --bg-bot:  #E0F5FF;
+      --text:    #2D2D2D;
+      --card:    #FFFDF5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--bg-top) 0%, var(--bg-bot) 100%);
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* ── floating shapes background ── */
+    .shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: .18;
+      animation: floatShape linear infinite;
+    }
+    .shape:nth-child(1)  { width:110px;height:110px;background:var(--coral); top:8%;  left:5%;  animation-duration:14s; }
+    .shape:nth-child(2)  { width: 70px;height: 70px;background:var(--teal);  top:18%; left:85%; animation-duration:18s;animation-delay:-6s; }
+    .shape:nth-child(3)  { width:140px;height:140px;background:var(--yellow);top:72%; left:3%;  animation-duration:20s;animation-delay:-3s; }
+    .shape:nth-child(4)  { width: 60px;height: 60px;background:var(--purple);top:80%; left:90%; animation-duration:12s;animation-delay:-9s; }
+    .shape:nth-child(5)  { width: 90px;height: 90px;background:var(--sky);   top:50%; left:50%; animation-duration:16s;animation-delay:-4s; }
+    .shape:nth-child(6)  { width: 50px;height: 50px;background:var(--orange);top:35%; left:25%; animation-duration:22s;animation-delay:-11s;}
+
+    @keyframes floatShape {
+      0%   { transform: translateY(0) rotate(0deg); }
+      50%  { transform: translateY(-40px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    /* ── stars ── */
+    .star {
+      position: fixed;
+      pointer-events: none;
+      font-size: 1.4rem;
+      animation: twinkle ease-in-out infinite;
+      opacity: .7;
+      z-index: 0;
+    }
+    @keyframes twinkle {
+      0%,100%{ transform: scale(1) rotate(0deg);   opacity:.7; }
+      50%     { transform: scale(1.35) rotate(20deg); opacity:1; }
+    }
+
+    /* ── main card ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: var(--card);
+      border-radius: 32px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
+      padding: 48px 52px 44px;
+      max-width: 600px;
+      width: calc(100% - 40px);
+      text-align: center;
+      border: 3px solid rgba(255,255,255,.85);
+    }
+
+    /* ── logo/brand ── */
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      background: linear-gradient(135deg,#FFF0CC,#FFDEE2);
+      border-radius: 50px;
+      padding: 8px 22px 8px 14px;
+      border: 2px solid #FFD43B66;
+    }
+    .brand-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg,var(--orange),var(--coral));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .brand-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.15rem;
+      color: #C45100;
+      letter-spacing: .3px;
+    }
+
+    /* ── main illustration ── */
+    .scene {
+      position: relative;
+      width: 260px;
+      height: 220px;
+      margin: 0 auto 28px;
+    }
+
+    /* ground */
+    .ground {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 220px; height: 20px;
+      background: linear-gradient(90deg,#A8E6CF,#7BC8A4);
+      border-radius: 50%;
+      opacity: .5;
+    }
+
+    /* rocket body */
+    .rocket {
+      position: absolute;
+      left: 50%; bottom: 30px;
+      transform: translateX(-50%);
+      animation: rocketHover 2.6s ease-in-out infinite;
+    }
+    @keyframes rocketHover {
+      0%,100%{ transform: translateX(-50%) translateY(0); }
+      50%     { transform: translateX(-50%) translateY(-14px); }
+    }
+    .rocket-body {
+      width: 54px; height: 90px;
+      background: linear-gradient(180deg,var(--coral) 0%,#FF9966 100%);
+      border-radius: 50% 50% 30% 30% / 60% 60% 30% 30%;
+      position: relative;
+      margin: 0 auto;
+      box-shadow: 0 4px 16px rgba(255,101,101,.4);
+    }
+    .rocket-window {
+      width: 22px; height: 22px;
+      background: radial-gradient(circle at 35% 35%,#E0F5FF,var(--sky));
+      border-radius: 50%;
+      border: 3px solid #fff;
+      position: absolute;
+      top: 26px; left: 50%;
+      transform: translateX(-50%);
+    }
+    .rocket-fin {
+      position: absolute;
+      bottom: -4px;
+      width: 16px; height: 22px;
+      background: var(--orange);
+      border-radius: 0 0 6px 6px;
+    }
+    .rocket-fin.left  { left: -12px;  transform: skewX(10deg); }
+    .rocket-fin.right { right: -12px; transform: skewX(-10deg); }
+    .rocket-tip {
+      width: 0; height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-bottom: 28px solid var(--coral);
+      position: absolute;
+      top: -26px; left: 50%;
+      transform: translateX(-50%);
+    }
+    .flame {
+      width: 24px; height: 36px;
+      background: linear-gradient(180deg,var(--yellow),var(--orange),transparent);
+      border-radius: 50% 50% 60% 60%;
+      position: absolute;
+      bottom: -38px; left: 50%;
+      transform: translateX(-50%);
+      animation: flicker .35s ease-in-out infinite alternate;
+      filter: blur(1px);
+    }
+    @keyframes flicker {
+      0%  { transform: translateX(-50%) scaleY(1)   scaleX(1); }
+      100%{ transform: translateX(-50%) scaleY(.75) scaleX(1.2); }
+    }
+
+    /* wrench tool */
+    .wrench {
+      position: absolute;
+      right: 28px; bottom: 60px;
+      font-size: 2.6rem;
+      animation: spin 3s ease-in-out infinite;
+      transform-origin: center;
+    }
+    @keyframes spin {
+      0%,100%{ transform: rotate(-20deg); }
+      50%     { transform: rotate(20deg); }
+    }
+
+    /* books stack */
+    .books {
+      position: absolute;
+      left: 18px; bottom: 18px;
+      display: flex; flex-direction: column; gap: 3px;
+      animation: bookBounce 2s ease-in-out infinite;
+    }
+    @keyframes bookBounce {
+      0%,100%{ transform: translateY(0); }
+      50%     { transform: translateY(-6px); }
+    }
+    .book {
+      width: 38px; height: 12px;
+      border-radius: 3px 6px 6px 3px;
+    }
+
+    /* ── headline ── */
+    h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.4rem;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    h1 span { color: var(--coral); }
+
+    p.sub {
+      font-size: 1.05rem;
+      color: #555;
+      font-weight: 600;
+      line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto 28px;
+    }
+
+    /* ── progress bar ── */
+    .progress-wrap {
+      background: #F1F0EB;
+      border-radius: 50px;
+      height: 18px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg,var(--teal),var(--sky));
+      border-radius: 50px;
+      width: 0%;
+      animation: fillBar 4s cubic-bezier(.4,0,.2,1) forwards, shimmer 1.8s linear infinite;
+      background-size: 200% 100%;
+    }
+    @keyframes fillBar {
+      0%  { width: 0%; }
+      100%{ width: 78%; }
+    }
+    @keyframes shimmer {
+      0%  { background-position: 200% 0; }
+      100%{ background-position: -200% 0; }
+    }
+    .progress-label {
+      font-size: .82rem;
+      font-weight: 700;
+      color: #888;
+      text-align: right;
+      margin-bottom: 24px;
+    }
+
+    /* ── emoji badges ── */
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: #F7F5FF;
+      border: 2px solid #E4DFFF;
+      border-radius: 50px;
+      padding: 8px 18px;
+      font-size: .9rem;
+      font-weight: 700;
+      color: #6C4EBD;
+      animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    .badge:nth-child(1){ animation-delay:.2s; background:#FFF4E6; border-color:#FFD8A8; color:#C45100; }
+    .badge:nth-child(2){ animation-delay:.35s;}
+    .badge:nth-child(3){ animation-delay:.5s; background:#E6FCF5; border-color:#96F2D7; color:#0CA678; }
+    @keyframes popIn {
+      from{ transform: scale(0); opacity:0; }
+      to  { transform: scale(1); opacity:1; }
+    }
+
+    /* ── footer note ── */
+    .footer-note {
+      margin-top: 4px;
+      font-size: .88rem;
+      color: #AAA;
+      font-weight: 600;
+    }
+    .footer-note a {
+      color: var(--coral);
+      text-decoration: none;
+      border-bottom: 1.5px dashed var(--coral);
+      transition: opacity .2s;
+    }
+    .footer-note a:hover{ opacity:.7; }
+
+    /* ── bottom floating icons ── */
+    .floaters {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .floater {
+      position: absolute;
+      font-size: 2rem;
+      animation: floatUp linear infinite;
+      opacity: .55;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) rotate(0deg);   opacity:.55; }
+      80%  { opacity:.55; }
+      100% { transform: translateY(-120px) rotate(360deg); opacity:0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- background shapes -->
+  <div class="shapes" aria-hidden="true">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <!-- twinkling stars -->
+  <div class="star" style="top:10%;left:12%;animation-duration:2.1s;">⭐</div>
+  <div class="star" style="top:20%;left:82%;animation-duration:1.7s;animation-delay:-.5s;">✨</div>
+  <div class="star" style="top:65%;left:90%;animation-duration:2.5s;animation-delay:-1s;">⭐</div>
+  <div class="star" style="top:75%;left:7%; animation-duration:1.9s;animation-delay:-.3s;">✨</div>
+  <div class="star" style="top:42%;left:95%;animation-duration:2.3s;animation-delay:-.8s;">🌟</div>
+
+  <!-- floating emojis -->
+  <div class="floaters" aria-hidden="true"></div>
+
+  <!-- main card -->
+  <div class="card" role="main">
+
+    <div class="brand">
+      <div class="brand-icon">📚</div>
+      <span class="brand-name">Legacy Educação</span>
+    </div>
+
+    <!-- illustration scene -->
+    <div class="scene" aria-hidden="true">
+      <div class="ground"></div>
+
+      <!-- books stack -->
+      <div class="books">
+        <div class="book" style="background:#FF6565;"></div>
+        <div class="book" style="background:#FFD43B;"></div>
+        <div class="book" style="background:#74C0FC;"></div>
+        <div class="book" style="background:#38D9A9;"></div>
+      </div>
+
+      <!-- rocket -->
+      <div class="rocket">
+        <div class="rocket-body">
+          <div class="rocket-tip"></div>
+          <div class="rocket-window"></div>
+          <div class="rocket-fin left"></div>
+          <div class="rocket-fin right"></div>
+          <div class="flame"></div>
+        </div>
+      </div>
+
+      <!-- wrench -->
+      <div class="wrench">🔧</div>
+    </div>
+
+    <h1>Estamos preparando<br><span>algo incrível!</span> 🚀</h1>
+
+    <p class="sub">
+      Nossa equipe está trabalhando duro para deixar tudo
+      ainda mais bacana pra você! Em breve voltamos com novidades. 🎉
+    </p>
+
+    <div class="progress-wrap" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da manutenção">
+      <div class="progress-bar"></div>
+    </div>
+    <p class="progress-label">Quase lá… 78% concluído ⚡</p>
+
+    <div class="badges">
+      <div class="badge">🔨 Fazendo melhorias</div>
+      <div class="badge">💜 Com muito carinho</div>
+      <div class="badge">📖 Novas lições chegando</div>
+    </div>
+
+    <p class="footer-note">
+      Dúvidas? Fale com a gente:
+      <a href="mailto:contato@legacyeducacao.com.br">contato@legacyeducacao.com.br</a>
+    </p>
+
+  </div>
+
+  <script>
+    // Floating emojis generator
+    const emojis = ['📚','✏️','🎨','🔭','🧪','🎯','💡','🌈','⭐','🎵','🦋','🌻'];
+    const container = document.querySelector('.floaters');
+
+    function spawnFloater() {
+      const el = document.createElement('div');
+      el.className = 'floater';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      const size = 1.4 + Math.random() * 1.4;
+      const left = Math.random() * 96;
+      const dur  = 7 + Math.random() * 10;
+      const delay = Math.random() * -12;
+      el.style.cssText = `
+        left: ${left}%;
+        font-size: ${size}rem;
+        animation-duration: ${dur}s;
+        animation-delay: ${delay}s;
+      `;
+      container.appendChild(el);
+      // remove after one cycle
+      setTimeout(() => el.remove(), (dur + Math.abs(delay) + 1) * 1000);
+    }
+
+    // spawn initial batch
+    for (let i = 0; i < 10; i++) spawnFloater();
+    // keep spawning
+    setInterval(spawnFloater, 1800);
+  </script>
+</body>
+</html>
